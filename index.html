@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>小宝俄罗斯方块</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Tetris Mobile</p>
+          <h1>小宝俄罗斯方块</h1>
+          <p class="subtitle">为手机手感优化的俄罗斯方块，点按更顺，节奏更稳。</p>
+        </div>
+        <div class="stats-card">
+          <div class="stat"><span>分数</span><strong id="score">0</strong></div>
+          <div class="stat"><span>消行</span><strong id="lines">0</strong></div>
+          <div class="stat"><span>等级</span><strong id="level">1</strong></div>
+        </div>
+      </header>
+
+      <main class="game-layout">
+        <section class="board-panel">
+          <div class="board-topbar">
+            <div id="status" class="status-pill">点击开始游戏</div>
+            <div class="actions">
+              <button id="pause-btn" class="btn secondary">暂停</button>
+              <button id="restart-btn" class="btn primary">重开</button>
+            </div>
+          </div>
+
+          <div class="board-stage">
+            <div class="board-wrap">
+              <canvas id="game" width="300" height="600" aria-label="俄罗斯方块画布"></canvas>
+              <div id="overlay" class="overlay visible">
+                <div class="overlay-card">
+                  <h2 id="overlay-title">准备开始</h2>
+                  <p id="overlay-text">手机点按下方按钮，电脑可用方向键 + 上键旋转。</p>
+                  <button id="start-btn" class="btn primary large">开始游戏</button>
+                </div>
+              </div>
+            </div>
+
+            <section class="panel controls-panel-mobile">
+              <h3>触控操作</h3>
+              <div class="touch-grid">
+                <button class="control-btn rotate" data-action="rotate">旋转</button>
+                <button class="control-btn drop" data-action="drop">速降</button>
+                <button class="control-btn move" data-action="left">←</button>
+                <button class="control-btn move" data-action="down">↓</button>
+                <button class="control-btn move" data-action="right">→</button>
+              </div>
+            </section>
+
+            <div class="board-hint">
+              <span>⬆ 旋转</span>
+              <span>⬅ ➡ 左右移动</span>
+              <span>⬇ 加速下落</span>
+            </div>
+          </div>
+        </section>
+
+        <aside class="sidebar">
+          <section class="panel next-panel">
+            <h3>下一个</h3>
+            <canvas id="next" width="120" height="120"></canvas>
+          </section>
+
+          <section class="panel info-panel">
+            <h3>玩法说明</h3>
+            <ul>
+              <li>凑满一整行就会消除并得分。</li>
+              <li>等级越高，下落越快。</li>
+              <li>堆到顶部，游戏结束。</li>
+              <li>空格键可暂停 / 继续。</li>
+            </ul>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
