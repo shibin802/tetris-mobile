@@ -11,22 +11,40 @@
   </head>
   <body>
     <div class="app-shell">
-      <header class="hero">
+      <!-- Desktop hero -->
+      <header class="hero desktop-only">
         <div>
           <p class="eyebrow">Tetris Mobile</p>
           <h1>小宝俄罗斯方块</h1>
           <p class="subtitle">为手机手感优化的俄罗斯方块，点按更顺，节奏更稳。</p>
         </div>
         <div class="stats-card">
-          <div class="stat"><span>分数</span><strong id="score">0</strong></div>
-          <div class="stat"><span>消行</span><strong id="lines">0</strong></div>
-          <div class="stat"><span>等级</span><strong id="level">1</strong></div>
+          <div class="stat"><span>分数</span><strong id="score-d">0</strong></div>
+          <div class="stat"><span>消行</span><strong id="lines-d">0</strong></div>
+          <div class="stat"><span>等级</span><strong id="level-d">1</strong></div>
+        </div>
+      </header>
+
+      <!-- Mobile compact header -->
+      <header class="mobile-bar mobile-only">
+        <div class="mobile-bar-left">
+          <span class="mobile-title">俄罗斯方块</span>
+        </div>
+        <div class="mobile-stats">
+          <div class="m-stat"><span>分数</span><strong id="score-m">0</strong></div>
+          <div class="m-stat"><span>消行</span><strong id="lines-m">0</strong></div>
+          <div class="m-stat"><span>等级</span><strong id="level-m">1</strong></div>
+        </div>
+        <div class="mobile-bar-right">
+          <button id="pause-btn-m" class="btn-icon">⏸</button>
+          <button id="restart-btn-m" class="btn-icon">🔄</button>
         </div>
       </header>
 
       <main class="game-layout">
         <section class="board-panel">
-          <div class="board-topbar">
+          <!-- Desktop topbar -->
+          <div class="board-topbar desktop-only">
             <div id="status" class="status-pill">点击开始游戏</div>
             <div class="actions">
               <button id="pause-btn" class="btn secondary">暂停</button>
@@ -34,12 +52,11 @@
             </div>
           </div>
 
-          <section class="panel next-panel next-panel-mobile">
-            <div class="next-panel-head">
-              <h3>下一个</h3>
-              <canvas id="next-mobile" width="96" height="96"></canvas>
-            </div>
-          </section>
+          <!-- Mobile next preview inline -->
+          <div class="mobile-next-row mobile-only">
+            <span class="mobile-next-label">下一个</span>
+            <canvas id="next-mobile" width="80" height="80"></canvas>
+          </div>
 
           <div class="board-stage">
             <div class="board-wrap">
@@ -47,32 +64,33 @@
               <div id="overlay" class="overlay visible">
                 <div class="overlay-card">
                   <h2 id="overlay-title">准备开始</h2>
-                  <p id="overlay-text">手机点按下方按钮，电脑可用方向键 + 上键旋转。</p>
+                  <p id="overlay-text">手机点按下方按钮或在画布上滑动。电脑用方向键。</p>
                   <button id="start-btn" class="btn primary large">开始游戏</button>
                 </div>
               </div>
             </div>
+          </div>
 
-            <section class="panel controls-panel-mobile">
-              <h3>触控操作</h3>
-              <div class="touch-grid">
-                <button class="control-btn rotate" data-action="rotate">旋转</button>
-                <button class="control-btn drop" data-action="drop">速降</button>
-                <button class="control-btn move" data-action="left">←</button>
-                <button class="control-btn move" data-action="down">↓</button>
-                <button class="control-btn move" data-action="right">→</button>
-              </div>
-            </section>
-
-            <div class="board-hint">
-              <span>⬆ 旋转</span>
-              <span>⬅ ➡ 左右移动</span>
-              <span>⬇ 加速下落</span>
+          <!-- Touch controls -->
+          <div class="touch-controls-area">
+            <div class="touch-grid">
+              <button class="control-btn rotate" data-action="rotate">↻ 旋转</button>
+              <button class="control-btn drop" data-action="drop">⤓ 速降</button>
+              <button class="control-btn move" data-action="left">←</button>
+              <button class="control-btn move" data-action="down">↓</button>
+              <button class="control-btn move" data-action="right">→</button>
             </div>
+          </div>
+
+          <!-- Desktop hints -->
+          <div class="board-hint desktop-only">
+            <span>⬆ 旋转</span>
+            <span>⬅ ➡ 左右移动</span>
+            <span>⬇ 加速下落</span>
           </div>
         </section>
 
-        <aside class="sidebar">
+        <aside class="sidebar desktop-only">
           <section class="panel next-panel">
             <h3>下一个</h3>
             <canvas id="next" width="120" height="120"></canvas>
