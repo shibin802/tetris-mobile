@@ -28,6 +28,8 @@ const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 const nextCanvas = document.getElementById('next');
 const nextCtx = nextCanvas.getContext('2d');
+const nextMobileCanvas = document.getElementById('next-mobile');
+const nextMobileCtx = nextMobileCanvas ? nextMobileCanvas.getContext('2d') : null;
 
 const scoreEl = document.getElementById('score');
 const linesEl = document.getElementById('lines');
@@ -314,22 +316,27 @@ function draw() {
   drawPiece();
 }
 
-function drawNext() {
-  nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+function paintNext(targetCtx, targetCanvas, size) {
+  if (!targetCtx || !targetCanvas) return;
+  targetCtx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
   const matrix = nextPiece.matrix;
-  const size = 24;
-  const offsetX = (nextCanvas.width - matrix[0].length * size) / 2;
-  const offsetY = (nextCanvas.height - matrix.length * size) / 2;
+  const offsetX = (targetCanvas.width - matrix[0].length * size) / 2;
+  const offsetY = (targetCanvas.height - matrix.length * size) / 2;
   matrix.forEach((row, y) => {
     row.forEach((value, x) => {
       if (value !== EMPTY) {
-        nextCtx.fillStyle = COLORS[value];
-        nextCtx.fillRect(offsetX + x * size, offsetY + y * size, size, size);
-        nextCtx.strokeStyle = 'rgba(255,255,255,0.18)';
-        nextCtx.strokeRect(offsetX + x * size + 1, offsetY + y * size + 1, size - 2, size - 2);
+        targetCtx.fillStyle = COLORS[value];
+        targetCtx.fillRect(offsetX + x * size, offsetY + y * size, size, size);
+        targetCtx.strokeStyle = 'rgba(255,255,255,0.18)';
+        targetCtx.strokeRect(offsetX + x * size + 1, offsetY + y * size + 1, size - 2, size - 2);
       }
     });
   });
+}
+
+function drawNext() {
+  paintNext(nextCtx, nextCanvas, 24);
+  paintNext(nextMobileCtx, nextMobileCanvas, 18);
 }
 
 window.addEventListener('keydown', (event) => {
@@ -379,16 +386,28 @@ canvas.addEventListener('touchstart', (event) => {
   touchStartY = touch.clientY;
 }, { passive: true });
 
+canvas.addEventListener('touchmove', (event) => {
+  event.preventDefault();
+}, { passive: false });
+
 canvas.addEventListener('touchend', (event) => {
   const touch = event.changedTouches[0];
   const dx = touch.clientX - touchStartX;
   const dy = touch.clientY - touchStartY;
+
+  if (!running) startGame();
+
+  if (Math.abs(dx) < 12 && Math.abs(dy) < 12) {
+    playerRotate();
+    return;
+  }
+
   if (Math.abs(dx) > Math.abs(dy)) {
-    if (dx > 24) playerMove(1);
-    else if (dx < -24) playerMove(-1);
+    if (dx > 18) playerMove(1);
+    else if (dx < -18) playerMove(-1);
   } else {
-    if (dy > 24) playerDrop();
-    else if (dy < -24) playerRotate();
+    if (dy > 18) playerDrop();
+    else if (dy < -18) playerRotate();
   }
 }, { passive: true });
 
