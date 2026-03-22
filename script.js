@@ -283,7 +283,7 @@ window.addEventListener('keydown', (e) => {
 });
 
 // Touch controls
-document.querySelectorAll('.control-btn').forEach(btn => {
+document.querySelectorAll('.control-btn, .s-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const a = btn.dataset.action;
     if (!running && a) startGame();

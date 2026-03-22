@@ -69,6 +69,8 @@ h1 { font-size: clamp(30px, 4vw, 48px); line-height: 1.05; }
 .board-hint { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
 .board-hint span { display: inline-flex; align-items: center; padding: 8px 12px; border-radius: 999px; font-size: 13px; color: var(--muted); background: rgba(255,255,255,.04); border: 1px solid var(--line); }
 
+.side-controls { display: none; }
+
 /* Tablet */
 @media (max-width: 920px) {
   .hero, .game-layout { grid-template-columns: 1fr; display: grid; }
@@ -195,7 +197,8 @@ h1 { font-size: clamp(30px, 4vw, 48px); line-height: 1.05; }
     flex: 1;
     min-height: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    gap: 8px;
   }
 
   .board-wrap {
@@ -215,24 +218,50 @@ h1 { font-size: clamp(30px, 4vw, 48px); line-height: 1.05; }
     object-fit: contain;
   }
 
-  /* Touch controls pinned at bottom */
-  .touch-controls-area {
+  /* Side controls on right */
+  .side-controls {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
     flex-shrink: 0;
-    margin-top: 6px;
-    padding: 0 2px;
+    width: 56px;
   }
 
-  .touch-grid {
-    gap: 6px;
-  }
-
-  .control-btn {
-    min-height: 54px;
+  .s-btn {
+    width: 56px;
+    height: 56px;
+    border: 1.5px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.07);
+    color: var(--text);
     border-radius: 14px;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
   }
 
-  .control-btn.rotate, .control-btn.drop {
-    font-size: 14px;
+  .s-btn:active {
+    background: rgba(96,165,250,.25);
+    border-color: rgba(96,165,250,.4);
+  }
+
+  .s-rotate {
+    background: rgba(96,165,250,.12);
+    border-color: rgba(96,165,250,.25);
+  }
+
+  .s-drop {
+    background: rgba(245,158,11,.12);
+    border-color: rgba(245,158,11,.25);
+  }
+
+  /* Touch controls hidden on mobile (replaced by side controls) */
+  .touch-controls-area {
+    display: none;
   }
 }
